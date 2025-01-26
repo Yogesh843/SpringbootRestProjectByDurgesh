@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  app:
+    image: spring_project_image
+    container_name: springboot_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    environment:
+      DB_URL: jdbc:mysql://mysqlcontainer:3306/mydb
+      DB_USER: root
+      DB_PASS: root
+    depends_on:
+      - mysqlcontainer
+    networks:
+      - spring_project_network
+  mysqlcontainer:
+    image: mysql:latest
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - spring_project_network
+
+volumes:
+  db-data:
+
+networks:
+  spring_project_network:
+    driver: bridge
