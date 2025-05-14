@@ -17,7 +17,7 @@ public class Course {
     //private static final long serialVersionUID = 1L;
 
     @Id
-    private long id;
+    private Long id;
     private String title;
     private String description;
 

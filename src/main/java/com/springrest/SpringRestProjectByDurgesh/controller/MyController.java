@@ -16,27 +16,27 @@ public class MyController {
     private CourseService courseService;
 
     @GetMapping("/courses")
-    public List<Course> getCourses() {
+    public ResponseEntity<List<Course>> getCourses() {
 
-        return courseService.getCourses();
+        return ResponseEntity.ok(courseService.getCourses());
     }
 
     @GetMapping("/courses/{courseId}")
-    public Course getCourse(@PathVariable String courseId) {
+    public ResponseEntity<Course> getCourseByCourseId(@PathVariable Long courseId) {
 
-        return courseService.getCourse(Long.parseLong(courseId));
+        return ResponseEntity.ok(courseService.getCourse(courseId));
     }
 
     @PostMapping("/courses")
-    public Course addCourse(@RequestBody Course course) {
+    public ResponseEntity<Course> addCourse(@RequestBody Course course) {
 
-        return courseService.addCourse(course);
+        return new ResponseEntity<>(courseService.addCourse(course), HttpStatus.CREATED);
     }
 
     @PutMapping("/courses")
-    public Course updateCourse(@RequestBody Course course) {
+    public ResponseEntity<Course> updateCourse(@RequestBody Course course) {
 
-        return courseService.updateCourse(course);
+        return ResponseEntity.ok(courseService.updateCourse(course));
     }
 
     @DeleteMapping("/courses/{courseId}")
